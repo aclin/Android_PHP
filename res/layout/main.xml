@@ -7,7 +7,7 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Enter text then, click ADD button to send it to the database."/>
+        android:text="Click ADD button to send rating to the database."/>
     
     <Button android:id="@+id/btAdd"
         android:layout_width="wrap_content"
@@ -29,9 +29,21 @@
         android:textSize="20dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"/>
-    
-    <ListView android:id="@+id/lvPosts"
+    <ScrollView android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:id="@+id/scrollView1">
+	<LinearLayout android:layout_width="fill_parent"
+			android:id="@+id/linearLayout1"
+			android:layout_height="fill_parent">
+    <TextView android:id="@+id/tvPost"
+    	android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>
+        
+        </LinearLayout>
+        </ScrollView>
+    <!-- <ListView android:id="@+id/lvPosts"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"/>
+        -->
 
 </LinearLayout>
