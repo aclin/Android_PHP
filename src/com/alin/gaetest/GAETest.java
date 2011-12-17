@@ -13,6 +13,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -149,9 +150,23 @@ public class GAETest extends Activity implements View.OnClickListener {
 					}
 				}
 				text = sb.toString();
+				Log.i(TAG, "Response: " + text);
+				
 			}
-			
-			tv.setText(text);
+			JSONTokener tokener = new JSONTokener(text);
+			Object o;
+			String reply = "";
+			while (tokener.more()) {
+				o = tokener.nextValue();
+				if (o instanceof JSONArray) {
+					JSONArray result = (JSONArray) o;
+					reply =  reply + parseJSON(result) + '\n' ;
+					tv.setText(reply);
+				} else {
+					tv.setText("Cannot parse response from server; not a JSON Object");
+				}
+			}
+			tv.setText(reply);
 			
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
@@ -162,6 +177,22 @@ public class GAETest extends Activity implements View.OnClickListener {
 			Log.e(TAG, e.toString());
 			e.printStackTrace();
 		}
+    }
+    
+    private String parseJSON(JSONArray ja) {
+    	String result = "";
+    	try {
+    		for (int i=0; i < ja.length(); i++) {
+		    	result = result + "First name: " + ja.getJSONObject(i).getString("FirstName") + '\n' ;
+		    	result = result + "Last name: " + ja.getJSONObject(i).getString("LastName") + '\n';
+		    	result = result + "Major: " + ja.getJSONObject(i).getString("Major") + '\n';
+		    	result = result + "Comment: " + ja.getJSONObject(i).getString("Comment") + '\n';
+		    	result += '\n';
+    		}
+    	} catch (JSONException je) {
+    		je.printStackTrace();
+    	}
+    	return result;
     }
     
     /*
