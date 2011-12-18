@@ -23,7 +23,7 @@
 		$sql = mysql_query('SELECT * FROM people');
 	} elseif ($command == "Read") {
 		mysql_select_db("ajatest", $con);
-		$sql = mysql_query('SELECT * FROM people');
+		$sql = mysql_query('SELECT * FROM college_eecs_csie');
 	}
 	
 	while ($row = mysql_fetch_assoc($sql)) $output[] = $row;
